@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DenzzXMODZ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Background Animation */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.15) 0%, transparent 70%);
+            filter: blur(15px);
+            animation: float 20s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0.5;
+            }
+            25% {
+                transform: translate(100px, 150px) rotate(90deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translate(200px, 50px) rotate(180deg);
+                opacity: 0.5;
+            }
+            75% {
+                transform: translate(50px, 200px) rotate(270deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+                opacity: 0.5;
+            }
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Tampilan Login */
+        .login-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .logo {
+            margin-bottom: 40px;
+        }
+        
+        .logo-text {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #ff0000;
+            text-shadow: 
+                0 0 10px #ff0000,
+                0 0 20px #ff0000,
+                0 0 30px #ff0000,
+                0 0 40px #ff0000;
+            animation: neonPulse 2s infinite alternate;
+            letter-spacing: 3px;
+        }
+        
+        @keyframes neonPulse {
+            0%, 100% { 
+                text-shadow: 
+                    0 0 10px #ff0000,
+                    0 0 20px #ff0000,
+                    0 0 30px #ff0000,
+                    0 0 40px #ff0000;
+                opacity: 1;
+            }
+            50% { 
+                text-shadow: 
+                    0 0 5px #ff0000,
+                    0 0 10px #ff0000,
+                    0 0 15px #ff0000,
+                    0 0 20px #ff0000;
+                opacity: 0.8;
+            }
+        }
+        
+        .login-form {
+            background: rgba(20, 20, 20, 0.85);
+            padding: 40px 35px;
+            border-radius: 20px;
+            border: 2px solid #ff0000;
+            box-shadow: 
+                0 0 25px rgba(255, 0, 0, 0.4),
+                inset 0 0 15px rgba(255, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.1), transparent);
+            transition: 0.8s;
+        }
+        
+        .login-form:hover::before {
+            left: 100%;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+            position: relative;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 12px;
+            color: #ff6b6b;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 16px 18px;
+            background: rgba(40, 40, 40, 0.7);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-input:focus {
+            border-color: #ff0000;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+            outline: none;
+            transform: translateY(-2px);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+        
+        .login-btn:active {
+            transform: scale(0.98);
+            background: linear-gradient(135deg, #cc0000, #990000);
+        }
+        
+        .login-btn:hover {
+            background: linear-gradient(135deg, #cc0000, #ff0000);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+        }
+        
+        .error-message {
+            color: #ff4444;
+            margin-top: 20px;
+            display: none;
+            font-weight: 600;
+            text-align: center;
+            animation: shake 0.5s ease-in-out;
+            background: rgba(255, 68, 68, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 68, 68, 0.3);
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+        
+        /* Tampilan Main */
+        .main-screen {
+            display: none;
+            padding: 20px 0;
+            text-align: center;
+            animation: scaleIn 0.8s ease-out;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) rotateX(-10deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotateX(0);
+            }
+        }
+        
+        .welcome-message {
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .main-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #ff0000;
+            text-shadow: 
+                0 0 10px #ff0000,
+                0 0 20px #ff0000,
+                0 0 30px #ff0000;
+            animation: neonPulse 2s infinite alternate;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+        
+        .section-title {
+            color: #ff0000;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 25px 0 15px 0;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            text-align: left;
+        }
+        
+        .features-container {
+            background: rgba(20, 20, 20, 0.85);
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid #ff0000;
+            box-shadow: 
+                0 0 25px rgba(255, 0, 0, 0.4),
+                inset 0 0 15px rgba(255, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
+            margin-bottom: 20px;
+        }
+        
+        .feature-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+        
+        .feature-item:active {
+            transform: scale(0.98);
+        }
+        
+        .feature-item:hover {
+            background: rgba(255, 0, 0, 0.05);
+            border-radius: 8px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-name {
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        .vip-feature {
+            opacity: 0.7;
+            position: relative;
+        }
+        
+        .vip-badge {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            margin-left: 8px;
+            text-transform: uppercase;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+        
+        .toggle-switch:active .slider:before {
+            transform: translateX(5px);
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 34px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        input:checked + .slider {
+            background-color: #ff0000;
+            border-color: rgba(255, 0, 0, 0.5);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+        
+        .vip-toggle input:checked + .slider {
+            background-color: #ffd700;
+        }
+        
+        /* Notifikasi */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            color: white;
+            padding: 18px 25px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4);
+            transform: translateX(400px);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+            display: block;
+        }
+        
+        .vip-notification {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #000;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+        
+        /* Instructions */
+        .instructions {
+            background: rgba(20, 20, 20, 0.85);
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid #ff0000;
+            box-shadow: 
+                0 0 25px rgba(255, 0, 0, 0.4),
+                inset 0 0 15px rgba(255, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .instructions-title {
+            color: #ff0000;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            text-align: center;
+            animation: neonPulse 2s infinite alternate;
+        }
+        
+        .instruction-step {
+            color: #ff6b6b;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            text-align: left;
+            padding-left: 10px;
+            border-left: 2px solid #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation" id="bgAnimation"></div>
+    
+    <!-- Notifikasi -->
+    <div class="notification" id="notification"></div>
+    
+    <!-- Tampilan Login -->
+    <div class="container">
+        <div class="login-screen" id="loginScreen">
+            <div class="logo">
+                <div class="logo-text">DenzzXMODZ</div>
+            </div>
+            <div class="login-form">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-input" id="username" placeholder="Masukkan username">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="password" placeholder="Masukkan password">
+                </div>
+                <button class="login-btn" id="loginBtn">LOGIN</button>
+                <div class="error-message" id="errorMessage">
+                    Password salah!
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tampilan Main -->
+    <div class="container">
+        <div class="main-screen" id="mainScreen">
+            <div class="welcome-message" id="welcomeMessage">Selamat datang, User!</div>
+            <div class="main-title">DenzzXMODZ</div>
+            
+            <!-- Fitur Regular -->
+            <div class="section-title">Fitur Regular</div>
+            <div class="features-container">
+                <div class="feature-item">
+                    <span class="feature-name">Headtrick</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="headtrick">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-name">Stabilizer</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="stabilizer">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-name">Stabilaim</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="stabilaim">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-name">Stabil fps</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="stabilfps">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-name">Stabildrag</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="stabildrag">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-name">Easy Drag</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="easydrag">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-name">Easy Aim</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="easyaim">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-name">Aimtrick</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="aimtrick">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-name">DragAim</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="dragaim">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-name">Reduce lag</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="reducelag">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Fitur VIP -->
+            <div class="section-title">Fitur VIP <span class="vip-badge">VIP</span></div>
+            <div class="features-container">
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Aimlock <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="aimlock">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Aimhead <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="aimhead">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Aimdrag <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="aimdrag">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Headlock <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="headlock">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Headtrick <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="headtrickvip">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Stabilizer <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="stabilizervip">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Stabilaim <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="stabilaimvip">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Stabildrag <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="stabildragvip">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Stabil fps <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="stabilfpsvip">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Easy Drag <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="easydragvip">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Easy Head <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="easyhead">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Easy Aim <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="easyaimvip">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Aimtracking <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="aimtracking">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Aimtrick <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="aimtrickvip">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">AutoAim 2.0 <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="autoaim">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">DragAim <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="dragaimvip">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">DragHead <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="draghead">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">AndroSettings <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="androsettings">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Sensi Custom <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="sensicustom">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Auto Sensivity <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="autosensivity">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Screen Smoother <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="screensmoother">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Reduce Lag <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="reducelagvip">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Bypass V1 <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="bypassv1">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Bypass V2 <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="bypassv2">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="feature-item vip-feature">
+                    <span class="feature-name">Bypass TW <span class="vip-badge">VIP</span></span>
+                    <label class="toggle-switch vip-toggle">
+                        <input type="checkbox" id="bypasstw">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Instructions -->
+            <div class="instructions">
+                <div class="instructions-title">AGAR FITUR BEKERJA, IKUTI PENGATURAN BERIKUT ⬇️</div>
+                <div class="instruction-step">1. Buka opsi developer di pengaturan</div>
+                <div class="instruction-step">2. Nonaktifkan ukuran buffer</div>
+                <div class="instruction-step">3. Skala animasi jendela 0,5</div>
+                <div class="instruction-step">4. Skala animasi transisi 0,5</div>
+                <div class="instruction-step">5. Skala durasi animator 0,5</div>
+                <div class="instruction-step">6. Dpi wajib 550-840</div>
+                <div class="instruction-step">7. Paksa 4x massa</div>
+                <div class="instruction-step">8. Buka game free fire</div>
+                <div class="instruction-step">9. Masuk HUD di freefire</div>
+                <div class="instruction-step">10. atur tombol tembak menjadi 47</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Membuat background animation
+        function createBackgroundAnimation() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const circleCount = 15;
+            
+            for (let i = 0; i < circleCount; i++) {
+                const circle = document.createElement('div');
+                circle.className = 'circle';
+                
+                // Random size and position
+                const size = Math.random() * 200 + 100;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const duration = Math.random() * 20 + 20;
+                const delay = Math.random() * 10;
+                
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                circle.style.left = `${posX}%`;
+                circle.style.top = `${posY}%`;
+                circle.style.animationDuration = `${duration}s`;
+                circle.style.animationDelay = `${delay}s`;
+                
+                bgAnimation.appendChild(circle);
+            }
+        }
+
+        // Check if user is already logged in
+        function checkLoginStatus() {
+            const savedUsername = localStorage.getItem('denzzxmodz_username');
+            if (savedUsername) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainScreen').style.display = 'block';
+                document.getElementById('welcomeMessage').textContent = `Selamat datang, ${savedUsername}`;
+            }
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            if (password === 'makasihbangdenzzudahbuatinaplikasisebagusini') {
+                // Login berhasil
+                localStorage.setItem('denzzxmodz_username', username);
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainScreen').style.display = 'block';
+                document.getElementById('welcomeMessage').textContent = `Selamat datang, ${username}`;
+                errorMessage.style.display = 'none';
+            } else {
+                // Login gagal
+                errorMessage.style.display = 'block';
+                document.getElementById('password').value = '';
+                
+                // Shake animation
+                errorMessage.style.animation = 'none';
+                setTimeout(() => {
+                    errorMessage.style.animation = 'shake 0.5s ease-in-out';
+                }, 10);
+            }
+        }
+        
+        // Fungsi untuk menampilkan notifikasi
+        function showNotification(message, isVip = false) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = 'notification';
+            
+            if (isVip) {
+                notification.classList.add('vip-notification');
+            }
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+        
+        // Event listener untuk tombol login
+        document.getElementById('loginBtn').addEventListener('click', login);
+        
+        // Event listener untuk toggle switches regular
+        document.querySelectorAll('.features-container:first-child .toggle-switch input').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const featureName = this.parentElement.parentElement.querySelector('.feature-name').textContent;
+                const status = this.checked ? 'ON' : 'OFF';
+                
+                // Tampilkan notifikasi
+                showNotification(`${featureName} ${status}`);
+            });
+        });
+        
+        // Event listener untuk toggle switches VIP
+        document.querySelectorAll('.vip-toggle input').forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                this.checked = false;
+                
+                // Shake effect
+                const featureItem = this.closest('.feature-item');
+                featureItem.style.animation = 'none';
+                setTimeout(() => {
+                    featureItem.style.animation = 'shake 0.5s ease-in-out';
+                }, 10);
+                
+                // Show VIP message
+                showNotification('Fitur ini hanya bisa diakses pengguna VIP', true);
+            });
+        });
+        
+        // Enter key untuk login
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+        
+        document.getElementById('username').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('password').focus();
+            }
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createBackgroundAnimation();
+            checkLoginStatus();
+            document.getElementById('username').focus();
+        });
+    </script>
+</body>
+</html>
